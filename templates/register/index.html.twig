@@ -4,14 +4,16 @@
 
 {% block content %}
     <h1>Inscription</h1>
-    {% if notification %}
-        {% for notif in notification %}
-            <div class="alert alert-info">
-                {{ notif }}
-            </div>
+
+    {% if app.flashes('notice') %}
+        {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{message}}
+        </div>
         {% endfor %}
-            <hr>
+        <hr>
     {% endif %}
+    
     <div>
         {{ form(form) }}
     </div>

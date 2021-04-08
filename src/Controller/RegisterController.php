@@ -39,14 +39,14 @@ class RegisterController extends AbstractController
             //je vérifie si l'email n'est pas utilisé
             if($search_email){
                 // si oui, addflash
-                $notification[] = "L'email est déjà utilisé.";
+                $this->addFlash('notice', "L'email est déjà utilisé.");
                 if($search_pseudo){
-                    $notification[] .= "Le pseudo est déjà utilisé.";
+                    $this->addFlash('notice', "Le pseudo est déjà utilisé.");
                 }
             // si non, je vérifie si le pseudo n'est pas utilisé
             } else if ($search_pseudo){
                 // si oui, addflash
-                $notification[] .= "Le pseudo est déjà utilisé.";
+                $this->addFlash('notice', "Le pseudo est déjà utilisé.");
             } else {
                 // si non, j'encode le mot de passe et le remplace dans le user
                 $password = $encoder->encodePassword($user,$user->getPassword());
@@ -55,13 +55,12 @@ class RegisterController extends AbstractController
                 $this->em->persist($user);
                 $this->em->flush();
                 //envoyer un mail pour notifier l'inscription
-                $notification[] = "Votre inscription s'est bien déroulée. Vous pouvez dès à présent vous connecter à votre compte.";
+                $this->addFlash('notice', "Votre inscription s'est bien déroulée. Vous pouvez dès à présent vous connecter à votre compte.");
             }
         }
 
         return $this->render('register/index.html.twig', [
-            'form' => $form->createView(),
-            'notification' => $notification
+            'form' => $form->createView()
         ]);
     }
 }
