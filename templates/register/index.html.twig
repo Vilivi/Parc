@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}M'inscrire - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Inscription</h1>
+
+    {% if app.flashes('notice') %}
+        {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{message}}
+        </div>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    
+    <div>
+        {{ form(form) }}
+    </div>
+{% endblock %}
