@@ -45,7 +45,7 @@
                         </li>
                     </ul>
                     {% if app.user %}
-                    <a href="{{ path('account') }}">Mon compte</a> || <a href="{{ path('app_logout') }}">Me déconnecter</a>
+                    <a href="{{ path('account') }}">Mon compte <small>({{app.user.pseudo}})</small></a> || <a href="{{ path('app_logout') }}">Me déconnecter</a>
                     {% else %}
                     <a href="{{ path('register') }}">M'inscrire</a> || <a href="{{ path('app_login') }}">Me connecter</a>
                     {% endif %}
