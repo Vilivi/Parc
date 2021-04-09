@@ -27,6 +27,11 @@ class Cart
         return $this->session->get('days');
     }
 
+    public function removeDays()
+    {
+        return $this->session->remove('days');
+    }
+
     public function addTicket($id)
     {
         // on prend le panier, on le modifie, et on set le panier avec les nouvelles valeurs

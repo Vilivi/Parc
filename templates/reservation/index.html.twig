@@ -3,17 +3,17 @@
 {% block title %}Réservation - Hoa Mai Parc{% endblock %}
 
 {% block content %}
-    <h1>Réserver une date</h1>
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-info">
-            {{message}}
-        </div>
-    {% endfor %}
+    {% if sejour %}
+    <h1>Modifier le séjour</h1>
+    {% else %}
+    <h1>Réserver un séjour</h1>
+    {% endif %}
 
     {% for message in app.flashes('warning') %}
         <div class="alert alert-danger">
             {{message}}
         </div>
     {% endfor %}
+
     {{form(form)}}
 {% endblock %}

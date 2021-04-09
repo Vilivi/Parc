@@ -4,15 +4,29 @@
 
 {% block content %}
     <h1>Mon Panier :</h1>
+    
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{message}}
+        </div>
+    {% endfor %}
 
-    {% if days|length > 0 %}
-    <h5>Dates de votre séjour : Du {{ days[0]|date('d-m-Y') }} au {{ days[1]|date('d-m-Y') }}</h5>
+    {% if days %}
+    <div class="mb-2">
+        <h5>Dates de votre séjour : Du {{ days[0]|date('d-m-Y') }} au {{ days[1]|date('d-m-Y') }}</h5>
+        <a href="{{ path('reservation') }}">Modifier les dates</a> | <a href="{{ path('reservation_remove') }}">Supprimer le séjour</a>
+        <hr>
+    </div>
+    {% else %}
+    <div class="mb-2">
+        <p>N'oubliez pas de <a href="{{ path('reservation') }}">sélectionner les dates</a> pour votre séjour.</p>
+        <hr>
+    </div>
     {% endif %}
 
-    <p>Retrouvez l'ensemble des produits de votre panier.</p>
+    <p class="my-3">Retrouvez l'ensemble des produits de votre panier.</p>
 
     {% if tickets|length > 0 %}
-    <hr>
     <table class="table mt-3">
         <thead>
             <tr class="text-center">

@@ -15,8 +15,13 @@ class CartController extends AbstractController
      */
     public function index(Cart $cart, Tools $tool): Response
     {
-        $days = $cart->getDays(); 
-        $duration = $tool->tripDuration($days[0], $days[1]);
+        $days = $cart->getDays();
+        
+        if($days) {
+            $duration = $tool->tripDuration($days[0], $days[1]);
+        } else {
+            $duration = 1;
+        }
 
         return $this->render('cart/index.html.twig', [
             'duration' => $duration,
