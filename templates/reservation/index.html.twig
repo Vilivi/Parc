@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Réserver une date</h1>
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{message}}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+    {% endfor %}
+    {{form(form)}}
+{% endblock %}

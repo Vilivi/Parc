@@ -14,8 +14,8 @@
                     <span>{{ticket.ticketPrice|number_format(2, ',', '.') }} €</span>
                 </p>
             </div>
-            <a href="{{ path('ticket_cart_add', {'id' : ticket.id}) }}" class="col-md-12 btn btn-success mx-auto mb-2 shadow-sm">Ajouter au panier</a>
         </div>
         {% endfor %}
     </div>
+    <p class="m-3">Souhaitez-vous <a href="{{ path('reservation') }}">réserver une date</a>?</p>
 {% endblock %}

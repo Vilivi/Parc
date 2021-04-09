@@ -17,6 +17,16 @@ class Cart
         $this->entityManager = $em;
     }
 
+    public function setDays($start, $end)
+    {
+        $this->session->set('days', [$start, $end]);
+    }
+
+    public function getDays()
+    {
+        return $this->session->get('days');
+    }
+
     public function addTicket($id)
     {
         // on prend le panier, on le modifie, et on set le panier avec les nouvelles valeurs

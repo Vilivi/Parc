@@ -35,9 +35,15 @@ class Receipt
      */
     private $orderDetails;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Day::class, mappedBy="receipts")
+     */
+    private $days;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
+        $this->days = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +100,33 @@ class Receipt
             if ($orderDetail->getReceipt() === $this) {
                 $orderDetail->setReceipt(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Day[]
+     */
+    public function getDays(): Collection
+    {
+        return $this->days;
+    }
+
+    public function addDay(Day $day): self
+    {
+        if (!$this->days->contains($day)) {
+            $this->days[] = $day;
+            $day->addReceipt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDay(Day $day): self
+    {
+        if ($this->days->removeElement($day)) {
+            $day->removeReceipt($this);
         }
 
         return $this;

@@ -4,24 +4,30 @@
 
 {% block content %}
     <h1>Mon Panier :</h1>
+
+    {% if days|length > 0 %}
+    <h5>Dates de votre séjour : Du {{ days[0]|date('d-m-Y') }} au {{ days[1]|date('d-m-Y') }}</h5>
+    {% endif %}
+
     <p>Retrouvez l'ensemble des produits de votre panier.</p>
 
-    {% if cart_tickets|length > 0 %}
+    {% if tickets|length > 0 %}
     <hr>
     <table class="table mt-3">
         <thead>
-            <tr>
-                <th scope="col">Ticket</th>
+            <tr class="text-center">
+                    <th scope="col">Ticket</th>
                     <th scope="col">Quantité</th>
                     <th scope="col">Prix</th>
+                    <th scope="col">Nombre de jours</th>
                     <th scope="col">Total</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 {% set total = null %}
-                {% for ticket in cart_tickets %}
-                <tr>
+                {% for ticket in tickets %}
+                <tr class="text-center">
                     <td>{{ ticket.ticket.ticketName }}</td>
                     <td>
                         <a href="{{ path('ticket_cart_add', {'id' : ticket.ticket.id}) }}">
@@ -33,7 +39,8 @@
                         </a>
                     </td>
                     <td>{{ ( ticket.ticket.ticketPrice)|number_format(2, ',', '.') }} €</td>
-                    <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity)|number_format(2, ',', '.') }} €</td>
+                    <td class=" text-center">{{ duration }}</td>
+                    <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity * duration)|number_format(2, ',', '.') }} €</td>
                     <td>
                         <a href="{{ path('ticket_cart_delete', {'id' : ticket.ticket.id}) }}">
                             <img src="{{ asset('assets/img/png/trash.png') }}" alt="supprimer mon produit">
@@ -47,7 +54,7 @@
 
         <div class="text-right mb-5">
             <div>
-                <p class="d-block"><span class="fw-bold">Nombre de tickets : </span>{{ cart_tickets|length }}</p>
+                <p class="d-block"><span class="fw-bold">Nombre de tickets : </span>{{ tickets|length }}</p>
                 <span class="fw-bold">Total de mon panier :  </span>{{ (total)| number_format(2, ',', '.') }} €
             </div>
             <a href="#" class="btn btn-success mt-3">Valider mon panier</a>
@@ -56,7 +63,7 @@
     {% else %}
         <div>
             <hr>
-            <p class="fw-bold">Votre panier est vide, souhaitez-vous <a href="">réserver une date</a>.</p>
+            <p class="fw-bold">Votre panier est vide, souhaitez-vous <a href="{{ path('reservation') }}">réserver une date</a>?</p>
         </div>
     {% endif %}
 {% endblock %}
