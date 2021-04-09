@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les tarifs - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Les tarifs :</h1>
+    <br>
+    <div class="row my-2">
+        {% for ticket in tickets %}
+        <div class="col-md-3 m-auto border shadow-sm row">
+            <div class="col-md-12 text-center box-shadow">
+                <h5 class="border-bottom p-2">{{ticket.ticketName}}</h5>
+                <p class="d-flex justify-content-around">
+                    <span>{{ticket.ticketPrice|number_format(2, ',', '.') }} €</span>
+                </p>
+            </div>
+            <a href="{{ path('ticket_cart_add', {'id' : ticket.id}) }}" class="col-md-12 btn btn-success mx-auto mb-2 shadow-sm">Ajouter au panier</a>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

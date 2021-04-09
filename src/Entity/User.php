@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -53,6 +55,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $pseudo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Receipt::class, mappedBy="user")
+     */
+    private $receipts;
+
+    public function __construct()
+    {
+        $this->receipts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +191,36 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Receipt[]
+     */
+    public function getReceipts(): Collection
+    {
+        return $this->receipts;
+    }
+
+    public function addReceipt(Receipt $receipt): self
+    {
+        if (!$this->receipts->contains($receipt)) {
+            $this->receipts[] = $receipt;
+            $receipt->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceipt(Receipt $receipt): self
+    {
+        if ($this->receipts->removeElement($receipt)) {
+            // set the owning side to null (unless already changed)
+            if ($receipt->getUser() === $this) {
+                $receipt->setUser(null);
+            }
+        }
 
         return $this;
     }

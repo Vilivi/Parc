@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Mon Panier :</h1>
+    <p>Retrouvez l'ensemble des produits de votre panier.</p>
+
+    {% if cart_tickets|length > 0 %}
+    <hr>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Ticket</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = null %}
+                {% for ticket in cart_tickets %}
+                <tr>
+                    <td>{{ ticket.ticket.ticketName }}</td>
+                    <td>
+                        <a href="{{ path('ticket_cart_add', {'id' : ticket.ticket.id}) }}">
+                            <img src="{{ asset('assets/img/png/add.png') }}" alt="augmenter ma quantité">
+                        </a>
+                        x {{ ticket.quantity }}
+                        <a href="{{ path('ticket_cart_decrease', {'id' : ticket.ticket.id}) }}">
+                            <img src="{{ asset('assets/img/png/minus.png') }}" alt="réduire ma quantité">
+                        </a>
+                    </td>
+                    <td>{{ ( ticket.ticket.ticketPrice)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity)|number_format(2, ',', '.') }} €</td>
+                    <td>
+                        <a href="{{ path('ticket_cart_delete', {'id' : ticket.ticket.id}) }}">
+                            <img src="{{ asset('assets/img/png/trash.png') }}" alt="supprimer mon produit">
+                        </a>
+                    </td>
+                </tr>
+                {% set total = total + (ticket.ticket.ticketPrice * ticket.quantity) %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right mb-5">
+            <div>
+                <p class="d-block"><span class="fw-bold">Nombre de tickets : </span>{{ cart_tickets|length }}</p>
+                <span class="fw-bold">Total de mon panier :  </span>{{ (total)| number_format(2, ',', '.') }} €
+            </div>
+            <a href="#" class="btn btn-success mt-3">Valider mon panier</a>
+        </div>
+
+    {% else %}
+        <div>
+            <hr>
+            <p class="fw-bold">Votre panier est vide</p>
+        </div>
+    {% endif %}
+{% endblock %}
