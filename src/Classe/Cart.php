@@ -32,6 +32,21 @@ class Cart
         return $this->session->remove('days');
     }
 
+    public function setFullTickets($q1, $q2, $q3) 
+    {
+        $this->removeCartTickets();
+
+        for($i = 0; $i < $q1; $i+= 1) {
+            $this->addTicket(1);
+        }
+        for($i = 0; $i < $q2; $i+= 1) {
+            $this->addTicket(2);
+        }
+        for($i = 0; $i < $q3; $i+= 1) {
+            $this->addTicket(3);
+        }
+    }
+
     public function addTicket($id)
     {
         // on prend le panier, on le modifie, et on set le panier avec les nouvelles valeurs
@@ -101,5 +116,21 @@ class Cart
         }
 
         return $cartFullTickets;
+    }
+
+    public function getTicketsQuantity()
+    {
+        $tickets = $this->getFullTickets();
+        $quantity = 0;
+        foreach($tickets as $ticket){
+            $quantity += $ticket['quantity'];
+        }
+        return $quantity;
+    }
+
+    public function getOrder()
+    {
+        $order = [$this->getFullTickets(), $this->getDays()];
+        return $order;
     }
 }

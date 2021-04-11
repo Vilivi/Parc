@@ -30,16 +30,17 @@
     <table class="table mt-3">
         <thead>
             <tr class="text-center">
-                    <th scope="col">Ticket</th>
+                    <th scope="col">Ticket d'entrée</th>
                     <th scope="col">Quantité</th>
                     <th scope="col">Prix</th>
-                    <th scope="col">Nombre de jours</th>
+                    <th scope="col">Durée du séjour</th>
                     <th scope="col">Total</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 {% set total = null %}
+                {% set quantity = null %}
                 {% for ticket in tickets %}
                 <tr class="text-center">
                     <td>{{ ticket.ticket.ticketName }}</td>
@@ -53,7 +54,7 @@
                         </a>
                     </td>
                     <td>{{ ( ticket.ticket.ticketPrice)|number_format(2, ',', '.') }} €</td>
-                    <td class=" text-center">{{ duration }}</td>
+                    <td>{{ duration }}</td>
                     <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity * duration)|number_format(2, ',', '.') }} €</td>
                     <td>
                         <a href="{{ path('ticket_cart_delete', {'id' : ticket.ticket.id}) }}">
@@ -61,14 +62,16 @@
                         </a>
                     </td>
                 </tr>
-                {% set total = total + (ticket.ticket.ticketPrice * ticket.quantity) %}
+                {% set total = total + (ticket.ticket.ticketPrice * ticket.quantity * duration) %}
+                {% set quantity = quantity + ticket.quantity %}
                 {% endfor %}
             </tbody>
         </table>
 
         <div class="text-right mb-5">
             <div>
-                <p class="d-block"><span class="fw-bold">Nombre de tickets : </span>{{ tickets|length }}</p>
+                <p class="d-block"><span class="fw-bold">Nombre de personnes: </span>{{ quantity  }}</p>
+                <p class="d-block"><span class="fw-bold">Durée du séjour : </span>{{ duration  }}</p>
                 <span class="fw-bold">Total de mon panier :  </span>{{ (total)| number_format(2, ',', '.') }} €
             </div>
             <a href="#" class="btn btn-success mt-3">Valider mon panier</a>
@@ -77,7 +80,8 @@
     {% else %}
         <div>
             <hr>
-            <p class="fw-bold">Votre panier est vide, souhaitez-vous <a href="{{ path('reservation') }}">réserver une date</a>?</p>
+            <small>Vous n'avez pas encore sélectionné de billets d'entrées,</small>
+            {% include 'tickets_form.html.twig' %}
         </div>
     {% endif %}
 {% endblock %}

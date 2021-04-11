@@ -30,7 +30,7 @@ class Day
     private $receipts;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string", length=33)
      */
     private $date;
 
@@ -80,12 +80,12 @@ class Day
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(string $date): self
     {
         $this->date = $date;
 

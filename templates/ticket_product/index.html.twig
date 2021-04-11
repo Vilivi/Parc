@@ -17,5 +17,11 @@
         </div>
         {% endfor %}
     </div>
+    {% if days %}
+    <div class="mt-5">
+        {% include 'tickets_form.html.twig' %}
+    </div>
+    {% else %}
     <p class="m-3">Souhaitez-vous <a href="{{ path('reservation') }}">réserver une date</a>?</p>
+    {% endif %}
 {% endblock %}

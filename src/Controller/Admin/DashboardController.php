@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Day;
 use App\Entity\Receipt;
 use App\Entity\Ticket;
 use App\Entity\User;
@@ -33,5 +34,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class);
         yield MenuItem::linkToCrud('Reçus', 'fas fa-receipt', Receipt::class);
+        yield MenuItem::linkToCrud('Jours', 'fas fa-sun', Day::class);
     }
 }
