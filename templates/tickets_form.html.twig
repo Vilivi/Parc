@@ -1,0 +1,15 @@
+<h5>De combien de billets aurez-vous besoin ?</h5>
+{{ form_start(form) }}
+<div class="row mx-auto">
+    <div class="col-md-7 m-1">
+        {{ form_row(form.ticket_1) }}
+    </div>
+    <div class="col-md-7 m-1">
+        {{ form_row(form.ticket_2) }}
+    </div>
+    <div class="col-md-7 m-1">
+        {{ form_row(form.ticket_3) }}
+    </div>
+        {{ form_row(form.submit) }}
+</div>
+{{ form_end(form) }}

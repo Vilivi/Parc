@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Classe\Mail;
 use App\Form\ChangePasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,11 +28,9 @@ class AccountPasswordController extends AbstractController
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
 
-        $notification = null; 
 
         if($form->isSubmitted() && $form->isValid()){
             $old_pwd = $form->get('old_password')->getData();
-
             // si le mot de passe actuel est le bon 
             if($encoder->isPasswordValid($user, $old_pwd)) {
                 //on encode le nouveau mot de passe et on le set à l'utilisateur
@@ -43,6 +41,9 @@ class AccountPasswordController extends AbstractController
                 // on affiche une notification
                 $this->addFlash('notice', 'Votre mot de passe a bien été modifié');
                 // on envoie un mail à l'utilisateur
+                $mail = new Mail();
+                $content = "Bonjour " . $user->getFirstName() . ", <br> Votre mot de passe a bien été modifié.";
+                $mail->send($user->getEmail(), $user->getFirstName(), "Modification de votre mot de passe", $content);
                 // on redirige vers account
                 return $this->redirectToRoute('account');
             //sinon on envoie une notification de mauvais mot de passe

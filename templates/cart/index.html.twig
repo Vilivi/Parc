@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Mon Panier :</h1>
+    
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{message}}
+        </div>
+    {% endfor %}
+
+    {% if days %}
+    <div class="mb-2">
+        <h5>Dates de votre séjour : Du {{ days[0]|date('d-m-Y') }} au {{ days[1]|date('d-m-Y') }}</h5>
+        <a href="{{ path('reservation') }}">Modifier les dates</a> | <a href="{{ path('reservation_remove') }}">Supprimer le séjour</a>
+        <hr>
+    </div>
+    {% else %}
+    <div class="mb-2">
+        <p>N'oubliez pas de <a href="{{ path('reservation') }}">sélectionner les dates</a> pour votre séjour.</p>
+        <hr>
+    </div>
+    {% endif %}
+
+    <p class="my-3">Retrouvez l'ensemble des produits de votre panier.</p>
+
+    {% if tickets|length > 0 %}
+    <table class="table mt-3">
+        <thead>
+            <tr class="text-center">
+                    <th scope="col">Ticket d'entrée</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Durée du séjour</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = null %}
+                {% set quantity = null %}
+                {% for ticket in tickets %}
+                <tr class="text-center">
+                    <td>{{ ticket.ticket.ticketName }}</td>
+                    <td>
+                        <a href="{{ path('ticket_cart_add', {'id' : ticket.ticket.id}) }}">
+                            <img src="{{ asset('assets/img/png/add.png') }}" alt="augmenter ma quantité">
+                        </a>
+                        x {{ ticket.quantity }}
+                        <a href="{{ path('ticket_cart_decrease', {'id' : ticket.ticket.id}) }}">
+                            <img src="{{ asset('assets/img/png/minus.png') }}" alt="réduire ma quantité">
+                        </a>
+                    </td>
+                    <td>{{ ( ticket.ticket.ticketPrice)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ duration }}</td>
+                    <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity * duration)|number_format(2, ',', '.') }} €</td>
+                    <td>
+                        <a href="{{ path('ticket_cart_delete', {'id' : ticket.ticket.id}) }}">
+                            <img src="{{ asset('assets/img/png/trash.png') }}" alt="supprimer mon produit">
+                        </a>
+                    </td>
+                </tr>
+                {% set total = total + (ticket.ticket.ticketPrice * ticket.quantity * duration) %}
+                {% set quantity = quantity + ticket.quantity %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right mb-5">
+            <div>
+                <p class="d-block"><span class="fw-bold">Nombre de personnes: </span>{{ quantity  }}</p>
+                <p class="d-block"><span class="fw-bold">Durée du séjour : </span>{{ duration  }}</p>
+                <span class="fw-bold">Total de mon panier :  </span>{{ (total)| number_format(2, ',', '.') }} €
+            </div>
+            <a href="#" class="btn btn-success mt-3">Valider mon panier</a>
+        </div>
+
+    {% else %}
+        <div>
+            <hr>
+            <small>Vous n'avez pas encore sélectionné de billets d'entrées,</small>
+            {% include 'tickets_form.html.twig' %}
+        </div>
+    {% endif %}
+{% endblock %}

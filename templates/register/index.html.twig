@@ -5,10 +5,10 @@
 {% block content %}
     <h1>Inscription</h1>
 
-    {% if app.flashes('notice') %}
-        {% for message in app.flashes('notice') %}
+    {% if notifications %}
+        {% for notification in notifications %}
         <div class="alert alert-info">
-            {{message}}
+            {{notification}}
         </div>
         {% endfor %}
         <hr>

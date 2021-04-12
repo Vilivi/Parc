@@ -41,14 +41,15 @@
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Les logements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Les tarifs</a>
+                            <a class="nav-link" href="{{ path('ticket_product') }}" tabindex="-1" aria-disabled="true">Les tarifs</a>
                         </li>
                     </ul>
                     {% if app.user %}
-                    <a href="{{ path('account') }}">Mon compte</a> || <a href="{{ path('app_logout') }}">Me déconnecter</a>
+                    <a href="{{ path('account') }}">Mon compte <small>({{app.user.pseudo}})</small></a> || <a href="{{ path('app_logout') }}">Me déconnecter</a>
                     {% else %}
                     <a href="{{ path('register') }}">M'inscrire</a> || <a href="{{ path('app_login') }}">Me connecter</a>
                     {% endif %}
+                    <a href="{{ path('cart') }}"><img src="{{ asset('assets/img/png/shopping-cart.png') }}" alt="Mon panier" class="mx-1 w-75 h-auto"></a> 
                 </div>
             </div>
         </nav>

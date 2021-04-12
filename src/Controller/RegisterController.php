@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,39 +29,46 @@ class RegisterController extends AbstractController
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
-        $notification = null; 
-
         if($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             
             $search_email = $this->em->getRepository(User::class)->findOneByEmail($user->getEmail());
             $search_pseudo = $this->em->getRepository(User::class)->findOneByPseudo($user->getPseudo());
 
+            $notification = null;
             //je vérifie si l'email n'est pas utilisé
             if($search_email){
                 // si oui, addflash
-                $this->addFlash('notice', "L'email est déjà utilisé.");
+                $notification[] = "L'email est déjà utilisé.";
                 if($search_pseudo){
-                    $this->addFlash('notice', "Le pseudo est déjà utilisé.");
+                    $notification[] .= "Le pseudo est déjà utilisé.";
                 }
             // si non, je vérifie si le pseudo n'est pas utilisé
             } else if ($search_pseudo){
                 // si oui, addflash
-                $this->addFlash('notice', "Le pseudo est déjà utilisé.");
+                $notification[] = "Le pseudo est déjà utilisé.";
+                return $this->render('register/index.html.twig', [
+                    'form' => $form->createView()
+                ]);
             } else {
                 // si non, j'encode le mot de passe et le remplace dans le user
+                $pass = $user->getPassword();
                 $password = $encoder->encodePassword($user,$user->getPassword());
                 $user->setPassword($password);
                 // persist et flush
                 $this->em->persist($user);
                 $this->em->flush();
-                //envoyer un mail pour notifier l'inscription
-                $this->addFlash('notice', "Votre inscription s'est bien déroulée. Vous pouvez dès à présent vous connecter à votre compte.");
+                //envoyer un mail et notifier l'inscription
+                $mail = new Mail();
+                $content = "Bonjour " . $user->getFirstName() . ", <br> Bienvenue sur Hoa Mai Parc! <br> Votre compte a bien été créé. <br> <br> Votre mot de passe est : " . $pass;
+                $mail->send($user->getEmail(), $user->getFirstName(), "Modification de votre mot de passe", $content);
+                $notification[] = "Votre inscription s'est très bien déroulée. Vous pouvez dès à présent vous connecter à votre compte.";
             }
         }
 
         return $this->render('register/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'notifications' => $notification
         ]);
     }
 }

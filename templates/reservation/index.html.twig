@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    {% if sejour %}
+    <h1>Modifier le séjour</h1>
+    {% else %}
+    <h1>Réserver un séjour</h1>
+    {% endif %}
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+    {% endfor %}
+
+    {{form(form)}}
+{% endblock %}
