@@ -93,6 +93,10 @@ Class Tools extends AbstractController
                 $cart->setFullTickets($q1, $q2, $q3);
                 return true;
             }
+        } else {
+            // s'il n'y a pas encore eu de réservation, j'enregistre les quantités et redirige vers la réservation des dates du séjour
+            $cart->setFullTickets($q1, $q2, $q3);
+            return $this->redirectToRoute('reservation');
         }
     }
 }

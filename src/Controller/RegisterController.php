@@ -29,13 +29,14 @@ class RegisterController extends AbstractController
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
+        $notification = null;
+
         if($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             
             $search_email = $this->em->getRepository(User::class)->findOneByEmail($user->getEmail());
             $search_pseudo = $this->em->getRepository(User::class)->findOneByPseudo($user->getPseudo());
 
-            $notification = null;
             //je vérifie si l'email n'est pas utilisé
             if($search_email){
                 // si oui, addflash
