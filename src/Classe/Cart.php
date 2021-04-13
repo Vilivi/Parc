@@ -17,14 +17,29 @@ class Cart
         $this->entityManager = $em;
     }
 
-    public function setDays($start, $end)
+    public function setDays(\Datetime $start, \Datetime $end)
     {
+        $this->setTripDuration($start, $end);
         $this->session->set('days', [$start, $end]);
     }
 
     public function getDays()
     {
         return $this->session->get('days');
+    }
+
+    private function setTripDuration(\Datetime $start, \Datetime $end)
+    {
+        $start = $start->format('d-m-Y');
+        $end = $end->format('d-m-Y');
+        $duration = (strtotime($end) - strtotime($start))/(60*60*24)+1; 
+
+        $this->session->set('duration', $duration);
+    }
+
+    public function getTripDuration()
+    {
+        return $this->session->get('duration'); 
     }
 
     public function removeDays()
@@ -128,9 +143,9 @@ class Cart
         return $quantity;
     }
 
-    public function getOrder()
-    {
-        $order = [$this->getFullTickets(), $this->getDays()];
-        return $order;
-    }
+    // public function getCartOrder()
+    // {
+    //     $order = ['tickets' => $this->getFullTickets(), $this->getTripDuration()];
+    //     return $order;
+    // }
 }

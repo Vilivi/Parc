@@ -17,19 +17,24 @@ Class Tools extends AbstractController
         $this->em = $em;
     }
 
-    public function tripDuration(DateTime $start, DateTime $end) 
-    {
-        $start = $start->format('d-m-Y');
-        $end = $end->format('d-m-Y');
-        return round((strtotime($end) - strtotime($start))/(60*60*24)+1); 
-    }
-
-    public function retrieveDatesTrip($days)
+    private function retrieveDatesTrip($days)
     {
         for($i = strtotime($days[0]->format('d-m-Y')); $i <= strtotime($days[1]->format('d-m-Y')); $i+=86400) {
             $dates []= date("d-m-Y",$i);
         }
         return $dates;
+    }
+
+    public function searchDatesTrip($days)
+    {
+        $dates = $this->retrieveDatesTrip($days);
+        $results = null;
+        foreach($dates as $date)
+        {
+            $results []= $this->em->getRepository(Day::class)->findOneByDate($date);
+        }
+
+        return $results;
     }
 
     public function checkDisponibilities(array $dates, int $quantity)

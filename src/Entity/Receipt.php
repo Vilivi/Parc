@@ -40,10 +40,35 @@ class Receipt
      */
     private $days;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $reference;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $billingAddress;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $state;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
         $this->days = new ArrayCollection();
+    }
+
+    public function getTotal()
+    {   
+        $total = null;
+        foreach($this->getOrderDetails()->getValues() as $product) {
+            $total = $total + ($product->getPrice() * $product->getQuantity());
+        }
+
+        return $total;
     }
 
     public function getId(): ?int
@@ -128,6 +153,42 @@ class Receipt
         if ($this->days->removeElement($day)) {
             $day->removeReceipt($this);
         }
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getBillingAddress(): ?string
+    {
+        return $this->billingAddress;
+    }
+
+    public function setBillingAddress(string $billingAddress): self
+    {
+        $this->billingAddress = $billingAddress;
+
+        return $this;
+    }
+
+    public function getState(): ?int
+    {
+        return $this->state;
+    }
+
+    public function setState(int $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
