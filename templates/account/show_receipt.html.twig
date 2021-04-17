@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de commande - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+
+<div class="mt-4">
+        <h2>Détail de votre commande n° <span class="fw-bold small">{{ receipt.reference }} :</span></h2>
+        <hr>
+        <p><span class="fw-bold">Dates du séjour : </span>{% for day in receipt.days|sort((a,b) => a.date <=> b.date) %} {{day.date}} {% endfor %} </p>
+        
+        {% if receipt.orderDetails|length > 0 %}
+        <table class="table mt-3">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Ticket d'entrée</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = null %}
+                {% for orderDetail in receipt.orderDetails %}
+                <tr class="text-center">
+                    <td>{{ orderDetail.product }}</td>
+                    <td>x {{ orderDetail.quantity }}</td>
+                    <td>{{ ( orderDetail.price / 100)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ ( orderDetail.total / 100)|number_format(2, ',', '.') }} €</td>
+                </tr>
+                {% set total = total + (orderDetail.total / 100) %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        <div class="m-4">
+            <p><span class="fw-bold">Total : </span>{{ total|number_format(2, ',', '.') }} €</p>
+            <p><ins>Adresse de facturation :<ins/></p>
+            <p>{{ receipt.billingAddress|raw }}</p>
+        </div>
+    </div>
+{% endblock %}

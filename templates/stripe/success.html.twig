@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de commande - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Confirmation de commande :</h1>
+    <p class="mb-4">Merci <span class="fw-bold">{% if app.user %} {{ app.user.firstname }}</span>, {% else %},{% endif %}pour votre commande sur <strong>Hoa Mai Parc</strong>.</p>
+    <hr>
+    <div class="mt-4">
+        <h2>Détail de votre commande : </h2>
+        <p><span class="fw-bold">Commande n° </span>{{ receipt.reference }} :</p>
+        <p><span class="fw-bold">Dates du séjour : </span>{% for day in days|sort((a,b) => a.date <=> b.date) %} {{day.date}} {% endfor %} </p>
+        
+        {% if orderDetails|length > 0 %}
+        <table class="table mt-3">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Ticket d'entrée</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = null %}
+                {% for orderDetail in orderDetails %}
+                <tr class="text-center">
+                    <td>{{ orderDetail.product }}</td>
+                    <td>x {{ orderDetail.quantity }}</td>
+                    <td>{{ ( orderDetail.price / 100)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ ( orderDetail.total / 100)|number_format(2, ',', '.') }} €</td>
+                </tr>
+                {% set total = total + (orderDetail.total / 100) %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        <p><span class="fw-bold">Total : </span>{{ total|number_format(2, ',', '.') }} €</p>
+
+        <p><ins>Adresse de facturation :<ins/></p>
+        <p>{{ receipt.billingAddress|raw }}</p>
+    </div>
+
+    <p class="mt-4">Si vous avez des questions à propos de votre commande, merci de nous envoyer un email sur
+        <a href="mailto:orders@example.com">orders@example.com</a>.
+    </p>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>Mes commandes</h1>
+    {% if empty %}
+    <p>Vous n'avez pas encore de commandes.</p>
+    {% else %}
+    <table class="table mt-4 text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Passée le </th>
+                    <th scope="col">Produit(s)</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for receipt in receipts %}
+                <tr>
+                    <td class="small fw-bold">{{ receipt.reference }}</td>
+                    <td>
+                        {% if receipt.state == 1 %}
+                            Paiement accepté
+                        {% elseif receipt.state == 2 %}
+                            Préparation en cours
+                        {% elseif receipt.state == 3 %}
+                            Livraison en cours
+                        {% endif %}
+                    </td>
+                    <td>{{ receipt.createdAt|date('d-m-Y') }}</td>
+                    <td>{{ receipt.orderDetails|length * receipt.days|length}}</td>
+                    <td>{{ (receipt.sumTotals / 100) |number_format(2, ',', '.') }} €</td>
+                    <td class="text-right"><a href="{{ path('account_receipt_show', {'reference' : receipt.reference}) }}">Voir ma commande</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {{dump(receipts)}}
+    {% endif %}
+{% endblock %}

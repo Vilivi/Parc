@@ -11,7 +11,7 @@
             <div class="col-md-12 text-center box-shadow">
                 <h5 class="border-bottom p-2">{{ticket.ticketName}}</h5>
                 <p class="d-flex justify-content-around">
-                    <span>{{ticket.ticketPrice|number_format(2, ',', '.') }} €</span>
+                    <span>{{(ticket.ticketPrice  / 100)|number_format(2, ',', '.') }} €</span>
                 </p>
             </div>
         </div>

@@ -83,9 +83,9 @@ Class Tools extends AbstractController
 
     public function askquantityTickets($form, Cart $cart)
     {
-        $q1 = $form->get('ticket_1')->getData();
-        $q2 = $form->get('ticket_2')->getData();
-        $q3 = $form->get('ticket_3')->getData();
+        $q1 = $form['1'];
+        $q2 = $form['2'];
+        $q3 = $form['3'];
             
         $days = $cart->getDays();
         if($days) {
@@ -96,7 +96,7 @@ Class Tools extends AbstractController
                 return false;
             } else {
                 $cart->setFullTickets($q1, $q2, $q3);
-                return true;
+                return $this->redirectToRoute('cart');;
             }
         } else {
             // s'il n'y a pas encore eu de réservation, j'enregistre les quantités et redirige vers la réservation des dates du séjour

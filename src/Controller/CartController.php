@@ -23,13 +23,13 @@ class CartController extends AbstractController
 
         $form = $this->createForm(QuantityTicketsType::class);
         $form->handleRequest($request);
+        
         if($form->isSubmitted() && $form->isValid()) {
-            $result = $tools->askquantityTickets($form, $cart);
-            if($result == false){
+            if(!$tools->askquantityTickets($form->getData(), $cart)) {
                 return $this->redirectToRoute('reservation');
             }
         }
-
+        
         return $this->render('cart/index.html.twig', [
             'duration' => $cart->getTripDuration(),
             'days' => $cart->getDays(),

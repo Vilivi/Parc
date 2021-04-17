@@ -30,11 +30,12 @@ class TicketProductController extends AbstractController
 
         $form = $this->createForm(QuantityTicketsType::class);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
-            $result = $tools->askquantityTickets($form, $cart);
-            if($result == false){
+            if(!$tools->askquantityTickets($form->getData(), $cart)){
                 return $this->redirectToRoute('reservation');
             }
+            return $this->redirectToRoute('cart');
         }
 
         return $this->render('ticket_product/index.html.twig', [
