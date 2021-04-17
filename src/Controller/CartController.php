@@ -21,13 +21,6 @@ class CartController extends AbstractController
             return $this->redirectToRoute('login_app');
         }
 
-        $days = $cart->getDays();
-        if($days) {
-            $duration = $tools->tripDuration($days[0], $days[1]);
-        } else {
-            $duration = 1;
-        }
-
         $form = $this->createForm(QuantityTicketsType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
@@ -38,7 +31,7 @@ class CartController extends AbstractController
         }
 
         return $this->render('cart/index.html.twig', [
-            'duration' => $duration,
+            'duration' => $cart->getTripDuration(),
             'days' => $cart->getDays(),
             'tickets' => $cart->getFullTickets(), 
             'form' => $form->createView(),
