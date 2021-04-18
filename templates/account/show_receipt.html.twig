@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="mt-4">
-        <h2>Détail de votre commande n° <span class="fw-bold small">{{ receipt.reference }} :</span></h2>
+        <h2 class="text-center">Détail de votre commande n° <span class="fw-bold small">{{ receipt.reference }} :</span></h2>
         <hr>
         <p><span class="fw-bold">Dates du séjour : </span>{% for day in receipt.days|sort((a,b) => a.date <=> b.date) %} {{day.date}} {% endfor %} </p>
         

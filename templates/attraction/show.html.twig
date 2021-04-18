@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attraction {{ attraction.name }} - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1>{{ attraction.name }}</h1>
+        <img class="card-img-top img-fluid mt-4" style="width: auto; height: 28rem" src="/uploads/{{ attraction.illustration }}" alt="{{ attraction.name }}">
+        <div class="card-body mb-5">
+            <p class="card-text">{{ attraction.subtitle }}</p>
+            <p class="card-text">{{ attraction.description }}</p>
+        </div>
+{% endblock %}

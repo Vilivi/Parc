@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Classe\Mail;
-use App\Classe\Tools;
 use App\Entity\Receipt;
 use App\Entity\Ticket;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,7 +71,7 @@ class StripeController extends AbstractController
     /**
      * @Route("/commande/merci/{stripeSessionId}", name="stripe_success")
      */
-    public function success($stripeSessionId, Tools $tools, Cart $cart)
+    public function success($stripeSessionId, Cart $cart)
     {
         $receipt = $this->em->getRepository(Receipt::class)->findOneByStripeSessionId($stripeSessionId);
 
@@ -116,6 +115,6 @@ class StripeController extends AbstractController
      */
     public function canceled() 
     {
-       return $this->render('stripe/canceled.html.twig');
+        return $this->render('stripe/canceled.html.twig');
     }
 }

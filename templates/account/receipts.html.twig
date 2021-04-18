@@ -13,7 +13,6 @@
                     <th scope="col">Référence</th>
                     <th scope="col">Statut</th>
                     <th scope="col">Passée le </th>
-                    <th scope="col">Produit(s)</th>
                     <th scope="col">Total</th>
                     <th scope="col"></th>
                 </tr>
@@ -32,13 +31,11 @@
                         {% endif %}
                     </td>
                     <td>{{ receipt.createdAt|date('d-m-Y') }}</td>
-                    <td>{{ receipt.orderDetails|length * receipt.days|length}}</td>
                     <td>{{ (receipt.sumTotals / 100) |number_format(2, ',', '.') }} €</td>
                     <td class="text-right"><a href="{{ path('account_receipt_show', {'reference' : receipt.reference}) }}">Voir ma commande</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    {{dump(receipts)}}
     {% endif %}
 {% endblock %}
