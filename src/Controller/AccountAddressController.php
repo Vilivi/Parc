@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Address;
-use App\Entity\User;
 use App\Form\AddressType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

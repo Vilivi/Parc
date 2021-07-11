@@ -1,5 +1,68 @@
-// $primary:       #FFBE0B;
-// $secondary:     #FB5607;
-// $success:       #3A86FF;
-// $info:          #FF006E;
-// $light:         #8338EC;
+$primary:       #ffE90B;
+$secondary:     #f20519;
+$info:          #ffbe0b;
+$danger:        #f20519;
+
+body, * {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+
+///////////////////// SKIN /////////////////////
+header {
+    nav {
+        background-color: --bs-light;
+        .navbar-brand {
+            background-color: $secondary;
+            &:hover {
+                color: $primary;
+            }
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .navbar-collapse {
+            a {
+                color: $secondary;
+            }
+            .nav-item {
+                .nav-link {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+header {
+    nav {
+        .navbar-brand {
+            padding: .25rem;
+            border-radius: 5%;
+        }
+        .navbar-collapse {
+            a {
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+
+.account-item {
+    text-align: center;
+}
+
+.cart {
+    background-color: $secondary;
+    padding: .5rem;
+    border-radius: 20%;
+    width: 75%; 
+    height: auto
+}
