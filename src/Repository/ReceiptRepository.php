@@ -19,6 +19,22 @@ class ReceiptRepository extends ServiceEntityRepository
         parent::__construct($registry, Receipt::class);
     }
 
+    /**
+     * @return Receipt[] Retourne un array de receipts payés
+     */
+    
+    public function findSuccessReceipts($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.state > 0')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Receipt[] Returns an array of Receipt objects
     //  */

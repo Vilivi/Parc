@@ -48,9 +48,6 @@ class RegisterController extends AbstractController
             } else if ($search_pseudo){
                 // si oui, addflash
                 $notification[] = "Le pseudo est déjà utilisé.";
-                return $this->render('register/index.html.twig', [
-                    'form' => $form->createView()
-                ]);
             } else {
                 // si non, j'encode le mot de passe et le remplace dans le user
                 $pass = $user->getPassword();

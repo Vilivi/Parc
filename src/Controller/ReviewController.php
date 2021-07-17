@@ -54,9 +54,19 @@ class ReviewController extends AbstractController
             ]);
         }
 
+        $average = 0;
+        foreach($reviews as $review) {
+            $average += $review->getNotation();
+        }
+
+        if(count($reviews) !== 0) {
+            $average /= count($reviews);
+        }
+
         return $this->render('review/index.html.twig', [
             'reviews' => $reviews, 
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'average' => $average
         ]);
     }
 }

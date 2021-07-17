@@ -38,5 +38,9 @@
             <p><ins>Adresse de facturation :<ins/></p>
             <p>{{ receipt.billingAddress|raw }}</p>
         </div>
+
+        {% if isNotPassed %}
+        <a href="{{ path('account_ticket_show', {'reference' : reference}) }}" class="btn btn-success">Voir mon billet</a>
+        {% endif %}
     </div>
 {% endblock %}

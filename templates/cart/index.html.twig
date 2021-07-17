@@ -3,7 +3,7 @@
 {% block title %}Mon Panier - Hoa Mai Parc{% endblock %}
 
 {% block content %}
-    <h1>Mon Panier :</h1>
+    <h1 class="content-title">Mon Panier :</h1>
 
     {% for message in app.flashes('notice') %}
         <div class="alert alert-info">
@@ -30,9 +30,9 @@
     </div>
     {% endif %}
 
+    {% if tickets|length > 0 %}
     <p class="my-3">Retrouvez l'ensemble des produits de votre panier.</p>
 
-    {% if tickets|length > 0 %}
     <table class="table mt-3">
         <thead>
             <tr class="text-center">
@@ -85,7 +85,6 @@
 
     {% else %}
         <div>
-            <hr>
             <small>Vous n'avez pas encore sélectionné de billets d'entrées,</small>
             {% include 'tickets_form.html.twig' %}
         </div>

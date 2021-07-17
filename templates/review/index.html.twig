@@ -4,21 +4,37 @@
 
 
 {% block content %}
-    {% for review in reviews %}
-    <div class="border rounded my-5">
-        <div class="d-flex justify-content-between">
-            <p class="p-2">{{review.title}} - {{ review.createdAt|date('d-m-Y h:s:i', "Europe/Paris") }}</p>
-            <p class="p-2">{{review.pseudo}}</p>
-            <p class="p-2">{{ review.notation }}</p>
+    <h1 class="content-title">Vos avis</h1>
+
+    {% if average != 0 %}
+        <div>
+            <p class="fs-5">Jusqu'à présent, Hoa Mai Parc a récolté une moyenne de <span class="fs-4 text-secondary">{{ average }} sur 5 &#9733;</span>!</p>
+            <p> Et nous tâchons, chaque jour, de continuer de nous améliorer afin que votre séjour soit des plus agréables !</p>
         </div>
-        <div class="border-top">{{ review.comment }}</div>
+    {% else %}
+        <div>
+            <p class="fs-5">Jusqu'à présent, Hoa Mai Parc n'a pas encore eu de retours de la part de nos clients.
+            <p> Soyez le premier !</p>
+        </div>
+    {% endif %}
+
+
+    {% for review in reviews %}
+    <div class="passed-reviews my-5">
+        <div class="d-flex justify-content-between">
+            <p class="p-3">{{review.title}} - {{ review.createdAt|date('d-m-Y h:s:i', "Europe/Paris") }}</p>
+            <p class="p-3">{{review.pseudo}}</p>
+            <p class="p-3">{{ review.notation }} &#9733;</p>
+        </div>
+        <hr class="m-0 p-0">
+        <div class="p-3">{{ review.comment }}</div>
     </div>
 
     {% endfor %}
 
     {% if app.user %}
     {{form_start(form)}}
-    <div class="row border p-1">
+    <div class="form-review row border p-1">
         <div class="col-md-12 border-bottom rounded">
             {{ app.user.pseudo }}
         </div>
@@ -38,7 +54,7 @@
     {{form_end(form)}}
     {% else %}
     {{form_start(form)}}
-    <div class="row">
+    <div class="form-review row">
         <div class="col-md-12">
             {{ form_row(form.pseudo) }}
         </div>

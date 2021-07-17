@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-        <h2>Mon récapitulatif  :</h2>
+        <h2 class="content-title">Mon récapitulatif  :</h2>
         <p>Retrouvez le récapitulatif de vos produits.</p>
         <hr>
         <div>                
@@ -50,7 +50,7 @@
                 <p class="d-block"><span class="fw-bold">Durée du séjour : </span>{{ duration  }}</p>
                 <span class="fw-bold">Total de mon panier :  </span>{{ (total)| number_format(2, ',', '.') }} €
             </div>
-            <button id="checkout-button" class="btn btn-success my-3">Payer | {{ total|number_format(2, ',', '.') }}€</button>
+            <button id="checkout-button" class="btn btn-success my-3 mx-2">Payer | {{ total|number_format(2, ',', '.') }}€</button>
         </div>
 {% endblock %}
 {% block script %}

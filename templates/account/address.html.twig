@@ -3,7 +3,7 @@
 {% block title %}Mes adresses - Hoa Mai Parc{% endblock %}
 
 {% block content %}
-    <h1>Mes adresses :</h1>
+    <h1 class="content-title">Mes adresses :</h1>
 
     {% for message in app.flashes('notice') %}
         <div class="alert alert-info">
@@ -12,11 +12,11 @@
     {% endfor %}
 
     {% if addresses %}
-        Pour en ajouter une <a href="{{ path('account_address_add') }}">cliquer ici</a>.
+        Pour ajouter une adresse, <a href="{{ path('account_address_add') }}">cliquer ici</a>.
         <div class="row">
             {% for address in addresses %}
             <div class="col-md-6 col-lg-4 my-2">
-                <div class="card" style="width: 18rem;">
+                <div class="card address-card" style="width: 18rem;">
                     <div class="card-body text-center">
                         <h5 class="card-title fw-bold">{{ address.name }}</h5>
                             {% if address.company %}
@@ -26,7 +26,7 @@
                                 {{ address.address }} <br>
                                 {{ address.postal }} - {{ address.city }} - {{ address.country }}
                             </p>
-                            <a href="{{ path('account_address_edit', {'id' : address.id}) }}">Modifier</a> | <a href="{{ path('account_address_delete', {'id' : address.id}) }}">Supprimer</a>
+                            <p><a href="{{ path('account_address_edit', {'id' : address.id}) }}">Modifier</a> | <a href="{{ path('account_address_delete', {'id' : address.id}) }}">Supprimer</a></p>
                     </div>
                 </div>
             </div>

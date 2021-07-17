@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Classe\Tools;
 use App\Entity\Receipt;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +24,7 @@ class AccountReceiptController extends AbstractController
      */
     public function index(): Response
     {
-        $receipts = $this->em->getRepository(Receipt::class)->findByUser($this->getUser());
+        $receipts = $this->em->getRepository(Receipt::class)->findSuccessReceipts($this->getUser());
         $empty = true;
 
         if($receipts) {
@@ -38,7 +40,7 @@ class AccountReceiptController extends AbstractController
     /**
      * @Route("/mon-compte/ma-commande/{reference}", name="account_receipt_show")
      */
-    public function show($reference): Response
+    public function show($reference, Tools $tools): Response
     {
         $receipt = $this->em->getRepository(Receipt::class)->findOneByReference($reference);
 
@@ -47,8 +49,78 @@ class AccountReceiptController extends AbstractController
             return $this->redirectToRoute('account_receipt');
         }
 
+        $isNotPassed = $tools->checkTicketIsNotPassed($receipt->getDays());
+        
         return $this->render('account/show_receipt.html.twig', [
-            'receipt' => $receipt
+            'receipt' => $receipt, 
+            'reference' => $reference,
+            'isNotPassed' => $isNotPassed
+        ]);
+    }
+
+    /**
+     * @Route("/mon-compte/mon-billet/{reference}", name="account_ticket_show")
+     */
+    public function showTicket($reference): Response
+    {
+        $receipt = $this->em->getRepository(Receipt::class)->findOneByReference($reference);
+
+        if(!$receipt) {
+            $this->addFlash('warning', 'Nous n\'avons pas pu trouver la commande demandée');
+            return $this->redirectToRoute('account_receipt');
+        }
+
+        $products = [];
+        $quantity = [];
+        foreach($receipt->getOrderDetails() as $orderDetails) {
+            $products []= $orderDetails->getProduct();
+        }
+        foreach($receipt->getOrderDetails() as $orderDetails) {
+            $quantity []= $orderDetails->getQuantity();
+        }
+
+        $productsAndQuantity = [$products, $quantity]; 
+
+        return $this->render('account/ticket.html.twig', [
+            'reference' => $reference,
+            'productsAndQuantity' => $productsAndQuantity 
+        ]);
+    }
+    
+    /**
+     * @Route("/mon-compte/telecharger-mon-billet/{reference}", name="account_download_ticket")
+     */
+    public function downloadTicket($reference): Response
+    {
+        $receipt = $this->em->getRepository(Receipt::class)->findOneByReference($reference);
+
+        if(!$receipt) {
+            $this->addFlash('warning', 'Nous n\'avons pas pu trouver la commande associée.');
+            return $this->redirectToRoute('account_receipt');
+        }
+
+        $products = [];
+        $quantity = [];
+        foreach($receipt->getOrderDetails() as $orderDetails) {
+            $products []= $orderDetails->getProduct();
+        }
+        foreach($receipt->getOrderDetails() as $orderDetails) {
+            $quantity []= $orderDetails->getQuantity();
+        }
+
+        $productsAndQuantity = [$products, $quantity];
+
+        $dompdf = new Dompdf();
+        $html = $this->renderView('account/test.html.twig', [
+            "reference" => $reference,
+            "productsAndQuantity" => $productsAndQuantity
+        ]); 
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+
+        return $this->render('account/ticket_dompdf.html.twig', [
+            'pdf' => $dompdf->stream(),
         ]);
     }
 }

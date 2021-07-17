@@ -3,9 +3,9 @@
 {% block title %}M'inscrire - Hoa Mai Parc{% endblock %}
 
 {% block content %}
-    <h1>Inscription</h1>
+    <h1 class="content-title">Inscription</h1>
 
-    {% if notifications %}
+    {% if notifications is defined %}
         {% for notification in notifications %}
         <div class="alert alert-info">
             {{notification}}

@@ -3,12 +3,13 @@
 {% block title %}Mon compte - Hoa Mai Parc{% endblock %}
 
 {% block content %}
-    <h1>Mon compte</h1>
+    <h1 class="content-title">Mon compte</h1>
     {# {% if is_granted('ROLE_ADMIN') %}
         <small><a href="/admin">Vous êtes un administrateur, accéder au backoffice ?</a></br></small>
     {% endif %} #}
-    Bienvenue <b>{{ app.user.firstname }}</b> sur votre compte. <br>
-    C'est dans cet espace que vous allez pouvoir gérer vos informations personnelles.
+
+    <p>Bienvenue <span class="fw-bold">{{ app.user.firstname }}</span> sur votre compte. </p>
+    <p>C'est dans cet espace que vous allez pouvoir gérer vos informations personnelles.</p>
     <hr>
     
     {% for message in app.flashes('notice') %}
@@ -19,19 +20,19 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="account-item text-center">
+            <div class="account-item">
                 <img src="{{ asset('assets/img/png/password.png') }}" alt="Modifier mon mot de passe"><br>
                 <a href="{{ path('password') }}">Modifier mon mot de passe</a>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="account-item text-center">
+            <div class="account-item">
                 <img src="{{ asset('assets/img/png/adress-book.png') }}" alt="Gérer mes adresses"><br>
                 <a href="{{ path('account_address') }}">Gérer mes adresses de facturation</a>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="account-item text-center">
+            <div class="account-item">
                 <img src="{{ asset('assets/img/png/shopping-bag.png') }}" alt="Mes commandes"><br>
                 <a href="{{ path('account_receipt') }}">Mes commandes</a>
             </div>

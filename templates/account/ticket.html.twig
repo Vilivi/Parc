@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre billet - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+<div class="dompdf">
+    <h2 class="content-title">Votre billet</h2>
+    <h3 class="mb-4">Référence : {{ reference }}</h3>
+    <h3>Les places</h3>
+    <table class="table">
+        <thead>
+            <tr>
+            {% for product in productsAndQuantity[0] %}
+                <th scope="col">{{ product }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for quantity in productsAndQuantity[1] %}
+                <td>{{quantity}}</td>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('account_download_ticket', {'reference' : reference}) }}" class="btn btn-success">Télécharger mon billet</a>
+</div>
+{% endblock %}

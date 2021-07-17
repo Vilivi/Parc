@@ -3,7 +3,6 @@
 namespace App\Classe;
 
 use App\Entity\Day;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -102,6 +101,24 @@ Class Tools extends AbstractController
             // s'il n'y a pas encore eu de réservation, j'enregistre les quantités et redirige vers la réservation des dates du séjour
             $cart->setFullTickets($q1, $q2, $q3);
             return $this->redirectToRoute('reservation');
+        }
+    }
+
+    public function checkTicketIsNotPassed($days) {
+        $tmstpToday = strtotime(date('d-m-Y'));
+        $count = 0;
+
+        foreach($days as $day) {
+            $tmstp = strtotime($day->getDate());
+            if($tmstp < $tmstpToday) {
+                $count += 1;
+            }
+        }
+
+        if($count == count($days)) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

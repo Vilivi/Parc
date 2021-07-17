@@ -3,15 +3,15 @@
 {% block title %}Les attractions - Hoa Mai Parc{% endblock %}
 
 {% block content %}
-    <h1 class="m-4">Les attractions</h1>
+    <h1 class="content-title m-4">Les attractions</h1>
     <div class="row">
         {% for attraction in attractions %}
-        <div class="card col-md-4 m-auto" style="width: 18rem; height: 28rem">
+        <div class="card attraction-card col-md-4 my-3 mx-auto">
             <img class="card-img-top" src="/uploads/{{ attraction.illustration }}" alt="{{ attraction.name }}">
             <div class="card-body">
                 <h5 class="card-title">{{ attraction.name }}</h5>
                 <p class="card-text">{{ attraction.subtitle }}</p>
-                <a href="{{ path('attraction_show', {'slug' :  attraction.slug }) }}" class="btn btn-primary">Voir plus de détail</a>
+                <a href="{{ path('attraction_show', {'slug' :  attraction.slug }) }}" class="btn btn-primary see-more">Voir plus de détails</a>
             </div>
         </div>
         {% endfor %}

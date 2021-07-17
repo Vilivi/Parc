@@ -14,7 +14,7 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Merci de vous connecter</h1>
+    <h1 class="content-title h3 mb-3 font-weight-normal">Merci de vous connecter</h1>
 
     {% for message in app.flashes('notice') %}
         <div class="alert alert-info">
@@ -39,9 +39,8 @@
             </label>
         </div>
     #}
-    <button class="btn btn-sm btn-success m-2" type="submit">Se connecter</button>
-    <hr>
-        <p class="text-center"><a href="{{ path('reset_password') }}">Mot de passe oublié</a> ?</p>
-        <p class="text-center">Ou souhaitez-vous <a href="{{ path('register') }}">créer un compte</a> ?</p>
+    <button class="btn btn-success" type="submit">Se connecter</button>
+        <p><a href="{{ path('reset_password') }}">Mot de passe oublié</a> ?</p>
+        <p>Ou souhaitez-vous <a href="{{ path('register') }}">créer un compte</a> ?</p>
 </form>
 {% endblock %}
