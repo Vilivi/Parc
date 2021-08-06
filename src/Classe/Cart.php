@@ -66,16 +66,13 @@ class Cart
     {
         // on prend le panier, on le modifie, et on set le panier avec les nouvelles valeurs
         $cart_ticket = $this->session->get('cart_ticket', []);
-        // dd($cart_ticket);
         if (!empty($cart_ticket[$id])) {
             $cart_ticket[$id]++;
         } else {
             $cart_ticket[$id] = 1;
         }
         
-        // dd($cart_ticket); //fonctionne
         $this->session->set('cart_ticket', $cart_ticket);
-        // dd($this->session->get('cart_ticket')); fonctionne
     }
 
     public function decreaseTicket($id)
@@ -108,7 +105,6 @@ class Cart
 
     public function getCartTicket()
     {
-        // dd($this->session->get('cart_ticket'));
         return $this->session->get('cart_ticket');
     }
 
