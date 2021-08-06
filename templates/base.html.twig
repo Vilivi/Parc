@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device.width, initial-scale=1">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200;1,600&display=swap" rel="stylesheet"> 
@@ -27,6 +27,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('review') }}">Vos avis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('reservation') }}">Je réserve</a>
                             </li>
                         </ul>
                         <div class="ms-auto me-4">
@@ -52,11 +55,12 @@
 
             <!-- FOOTER -->
         </main>
-        <footer class="container-fluid text-white text-center bg-dark mt-5">
-                <p>&copy; 2017-2020 Company, Inc. &middot; </p>
-                <p><a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <footer class="container-fluid text-center bg-dark mt-5">
+                <p class="text-primary">&copy; 2021 Virginie BAUMES &middot; </p>
+                <p class="text-white"><a href="#" class="text-white">Mentions légales</a> | <a href="#" class="text-white">Protection des données</a> | <a href="#" class="text-white">CGV</a></p>
         </footer>
         {{ encore_entry_script_tags('app') }}
+        {% block javascript %}{% endblock %}
+        {% block script %}{% endblock %}
     </body>
-    {% block script %}{% endblock %}
 </html>

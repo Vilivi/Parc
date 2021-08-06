@@ -27,7 +27,7 @@ class StripeController extends AbstractController
      */
     public function index($reference)
     {
-        $YOUR_DOMAIN = 'http://127.0.0.1:8000';
+        $YOUR_DOMAIN = $_ENV['DOMAIN_URL'];
         $products_for_stripe = [];
 
         $receipt = $this->em->getRepository(Receipt::class)->findOneByReference($reference);
@@ -48,8 +48,9 @@ class StripeController extends AbstractController
                     'quantity' => $product->getQuantity(),
             ];
         }
-        Stripe::setApiKey('sk_test_51IfnB2IS0F3DhtpBEKpNdP7kda9EM0oxdWPWIqmoGYejOtYiB95iwHI72Tz33rPGjaEMBizfHssD5hbzFMDyC8oP00BXTEvvtD');
-        // dd($products_for_stripe);
+
+        Stripe::setApiKey($_ENV['KEY_STRIPE']);
+
         $checkout_session = Session::create([
             'customer_email' => $this->getUser()->getEmail(),
             'payment_method_types' => ['card'],

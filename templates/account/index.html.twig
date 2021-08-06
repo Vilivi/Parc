@@ -4,12 +4,13 @@
 
 {% block content %}
     <h1 class="content-title">Mon compte</h1>
-    {# {% if is_granted('ROLE_ADMIN') %}
-        <small><a href="/admin">Vous êtes un administrateur, accéder au backoffice ?</a></br></small>
-    {% endif %} #}
 
-    <p>Bienvenue <span class="fw-bold">{{ app.user.firstname }}</span> sur votre compte. </p>
-    <p>C'est dans cet espace que vous allez pouvoir gérer vos informations personnelles.</p>
+    {% if is_granted('ROLE_ADMIN') %}
+        <p class="small">Vous êtes un administrateur, souhaitez-vous<a href="/admin"> accéder au Back Office ?</a></p>
+    {% endif %}
+
+    <p>Bienvenue <span class="fw-bold">{{ app.user.firstname }}</span> sur votre compte.
+    <span class="d-block">C'est dans cet espace que vous allez pouvoir gérer vos informations personnelles.<span></p>
     <hr>
     
     {% for message in app.flashes('notice') %}

@@ -9,7 +9,7 @@
         {% for ticket in tickets %}
         <div class="col-md-3 m-auto border border-secondary shadow-sm row">
             <div class="col-md-12 text-center box-shadow">
-                <h5 class="border-bottom p-2">{{ticket.ticketName}}</h5>
+                <h5 class="border-top-0 border-end-0 border-start-0 border border-dark p-2">{{ticket.ticketName}}</h5>
                 <p class="d-flex justify-content-around">
                     <span>{{(ticket.ticketPrice  / 100)|number_format(2, ',', '.') }} €</span>
                 </p>

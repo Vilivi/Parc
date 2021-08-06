@@ -168,6 +168,10 @@ main {
         }
         
         .attraction-card {
+            min-height: 24rem !important;
+            img {
+                height: 11.438rem;
+            }
             .card-body {
                 :first-child {
                     text-transform: uppercase;
@@ -176,8 +180,10 @@ main {
                     font-weight: bold;
                 }
                 .see-more {
-                    display: flex;
-                    justify-content: center;
+                    position: absolute;
+                    bottom: .938rem;
+                    width: 95%;
+                    left: 2.5%;
                     color: black !important;
                     text-decoration: none;
                     &:hover {

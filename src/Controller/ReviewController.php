@@ -36,9 +36,19 @@ class ReviewController extends AbstractController
         }
         $form->handleRequest($request);
 
+        $average = 0;
+        foreach($reviews as $review) {
+            $average += $review->getNotation();
+        }
+
+        if(count($reviews) !== 0) {
+            $average /= count($reviews);
+            $average = round($average, 2);
+        }
+
         if($form-> isSubmitted() && $form->isValid()) {
-            $review->setCreatedAt(new DateTime());
             $review = $form->getData();
+            $review->setCreatedAt(new DateTime());
 
             if($this->getUser()) {
                 $pseudo = $this->getUser()->getPseudo();
@@ -50,17 +60,9 @@ class ReviewController extends AbstractController
 
             return $this->render('review/index.html.twig', [
                 'reviews' => $reviews, 
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'average' => $average
             ]);
-        }
-
-        $average = 0;
-        foreach($reviews as $review) {
-            $average += $review->getNotation();
-        }
-
-        if(count($reviews) !== 0) {
-            $average /= count($reviews);
         }
 
         return $this->render('review/index.html.twig', [

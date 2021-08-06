@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ChangePasswordType extends AbstractType
 {
@@ -40,6 +41,9 @@ class ChangePasswordType extends AbstractType
             ->add('new_password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => 'Votre nouveau mot de passe',
+                'constraints' => new Length([
+                    'min' => 8, 'max' => 15
+                    ]),
                 'mapped' => false,
                 'required' => true,
                 'invalid_message' => 'Le mot de passe de confirmation doit être identique au mot de passe.',

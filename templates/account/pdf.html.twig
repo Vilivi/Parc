@@ -1,0 +1,17 @@
+<div>
+    <h2>Billet de réservation :</h2>
+    <h3>Référence : {{ reference }}</h3>
+    <br>
+    <h4>Dates(s) :
+    {% for j in 0..(days|length - 1) %}
+        {{days[j].date}}
+        {% if j != (days|length - 1) %}
+            ,
+        {% endif %}
+    {% endfor %}
+    </h4>
+    
+    {% for i in 0..(productsAndQuantity[0]|length - 1) %}
+    <p><strong>Places pour {{ productsAndQuantity[0][i] }}</strong>: {{ productsAndQuantity[1][i] }}</p>
+    {% endfor %}
+</div>

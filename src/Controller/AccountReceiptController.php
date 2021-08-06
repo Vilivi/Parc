@@ -70,13 +70,15 @@ class AccountReceiptController extends AbstractController
             return $this->redirectToRoute('account_receipt');
         }
 
+        $days = $receipt->getDays()->getValues();
+
         $products = [];
         $quantity = [];
         foreach($receipt->getOrderDetails() as $orderDetails) {
             $products []= $orderDetails->getProduct();
         }
         foreach($receipt->getOrderDetails() as $orderDetails) {
-            $quantity []= $orderDetails->getQuantity();
+            $quantity []= $orderDetails->getQuantity() / count($days);
         }
 
         $productsAndQuantity = [$products, $quantity]; 
@@ -99,21 +101,24 @@ class AccountReceiptController extends AbstractController
             return $this->redirectToRoute('account_receipt');
         }
 
+        $days = $receipt->getDays()->getValues();
+
         $products = [];
         $quantity = [];
         foreach($receipt->getOrderDetails() as $orderDetails) {
             $products []= $orderDetails->getProduct();
         }
         foreach($receipt->getOrderDetails() as $orderDetails) {
-            $quantity []= $orderDetails->getQuantity();
+            $quantity []= $orderDetails->getQuantity() / count($days);
         }
 
         $productsAndQuantity = [$products, $quantity];
 
         $dompdf = new Dompdf();
-        $html = $this->renderView('account/test.html.twig', [
+        $html = $this->renderView('account/pdf.html.twig', [
             "reference" => $reference,
-            "productsAndQuantity" => $productsAndQuantity
+            "productsAndQuantity" => $productsAndQuantity,
+            "days" => $days
         ]); 
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4');
