@@ -27,7 +27,7 @@ class DayType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => [
-                    'class' => 'btn btn-success mt-2'
+                    'class' => 'btn btn-success'
                 ]
             ])
         ;

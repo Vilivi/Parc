@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Ma commande - Hoa Mai Parc{% endblock %}
+{% block javascript %}
+    <script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
 
 {% block content %}
-        <h2>Mon récapitulatif  :</h2>
+        <h2 class="content-title">Mon récapitulatif  :</h2>
         <p>Retrouvez le récapitulatif de vos produits.</p>
         <hr>
         <div>                
@@ -32,22 +35,53 @@
                 <tr class="text-center">
                     <td>{{ ticket.ticket.ticketName }}</td>
                     <td>x {{ ticket.quantity }}</td>
-                    <td>{{ ( ticket.ticket.ticketPrice)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ ( ticket.ticket.ticketPrice / 100 )|number_format(2, ',', '.') }} €</td>
                     <td>{{ duration }}</td>
-                    <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity * duration)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ ( ticket.ticket.ticketPrice * ticket.quantity * duration / 100)|number_format(2, ',', '.') }} €</td>
                 </tr>
-                {% set total = total + (ticket.ticket.ticketPrice * ticket.quantity * duration) %}
+                {% set total = total + (ticket.ticket.ticketPrice * ticket.quantity * duration / 100) %}
                 {% set quantity = quantity + ticket.quantity %}
                 {% endfor %}
             </tbody>
         </table>
         <div class="text-right mb-5">
             <div>
-                <p class="d-block"><span class="fw-bold">Nombre de personnes: </span>{{ quantity  }}</p>
+                <p class="d-block"><span class="fw-bold">Nombre de personnes :</span>{{ quantity  }}</p>
                 <p class="d-block"><span class="fw-bold">Durée du séjour : </span>{{ duration  }}</p>
                 <span class="fw-bold">Total de mon panier :  </span>{{ (total)| number_format(2, ',', '.') }} €
             </div>
-            <a id="checkout-button" class="btn btn-success mt-3">Payer | {{ total|number_format(2, ',', '.') }}€</a>
+            <button id="checkout-button" class="btn btn-success my-3 mx-2">Payer | {{ total|number_format(2, ',', '.') }}€</button>
         </div>
-    </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    var stripe = Stripe("pk_test_51IfnB2IS0F3DhtpBMXfRv0pkG6ViBgG7aYJiPnlJnop0V8qQXQDPlTGwKhMLA2lFwt7ebX0vhcrm1lCbuwF8hs9q004p8R4Mle");
+    var checkoutButton = document.getElementById("checkout-button");
+    checkoutButton.addEventListener("click", function () {
+        fetch("/commande/create-session/{{ reference }}", {
+            method: "POST",
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (session) {
+            if(session.error == 'order'){
+                window.location.replace('{{ path('order') }}');
+            } else {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            }
+        })
+        .then(function (result) {
+        // If redirectToCheckout fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using error.message.
+            if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error:", error);
+            });
+        });
+</script>
 {% endblock %}

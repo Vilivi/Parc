@@ -1,5 +1,282 @@
-// $primary:       #FFBE0B;
-// $secondary:     #FB5607;
-// $success:       #3A86FF;
-// $info:          #FF006E;
-// $light:         #8338EC;
+$primary:       #ffE90B;
+$secondary:     #f20519;
+$info:          #ffbe0b;
+$danger:        #f20519;
+$success:       #198754 ;
+
+body, * {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+///////////////////// LAYOUT /////////////////////
+header {
+    height: 7vh;
+}
+
+main {
+    min-height: 90vh;
+}
+
+footer {
+    height: 5vh;
+}
+
+
+
+
+///////////////////// SKIN /////////////////////
+header {
+    nav {
+        border-bottom: 2px solid grey;
+        box-shadow: 1px 1px 1px 1px black;
+        .container-fluid {
+            text-align: center;
+            .navbar-brand {
+                background-color: $secondary;
+                &:hover {
+                    color: $primary;
+                }
+            }
+            .navbar-toggler {
+                border: none !important;
+
+                .navbar-toggler-icon {
+                    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(0, 0, 0, 0.55)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+                }
+            }
+            .navbar-brand {
+                font-weight: bold;
+            }
+            .navbar-collapse {
+                a {
+                    color: $secondary;
+                }
+                .nav-item {
+                    .nav-link {
+                        font-weight: bold;
+                    }
+                }
+            }
+            .anchor-cart {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 3rem;
+                margin-top: 1rem;
+                margin-right: .3rem;
+            }
+        }
+    }
+}
+
+header {
+    nav {
+        z-index: 100;
+        background-color: white;
+        .navbar-brand {
+            padding: .25rem;
+            border-radius: 5%;
+        }
+        .navbar-collapse {
+            a {
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+main {
+    .marketing {
+        display: flex;
+        flex-direction: column;
+
+        .content-title {
+            align-self: center;
+            margin-bottom: 2.5rem;
+            padding: .25rem;
+            font-weight: bold;
+            white-space: nowrap;
+            background-image: linear-gradient(120deg, $primary 0%, $secondary 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.2em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+            &:hover {
+                background-size: 100% 88%;
+            }
+        }
+        
+        .anchor {
+            text-decoration: none;
+            color: $success;
+            &:hover {
+                font-weight: bold;
+            }
+        }
+    
+        .passed-reviews {
+            border: 1px solid $info;
+            border-radius: 1.25rem;
+            :first-child {
+                p {
+                    font-weight: bold;
+                }
+                :last-child {
+                    color: $secondary;
+                }
+            }
+        }
+    
+        .form-review {
+            border: 1px solid $secondary;
+            border-radius: 1.25rem;
+            margin: .5rem;
+            padding: 1rem;
+            label {
+                padding: .25rem;
+                font-weight: bold;
+            }
+            button, input {
+                padding: .5rem;
+            }
+            button {
+                margin: .25rem;
+            }
+        }
+    
+        .account-item {
+            text-align: center;
+            a {
+                color: $success;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    
+        .address-card {
+            min-height: 15rem !important;
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+        
+        .attraction-card {
+            min-height: 24rem !important;
+            img {
+                height: 11.438rem;
+            }
+            .card-body {
+                :first-child {
+                    text-transform: uppercase;
+                }
+                .card-text {
+                    font-weight: bold;
+                }
+                .see-more {
+                    position: absolute;
+                    bottom: .938rem;
+                    width: 95%;
+                    left: 2.5%;
+                    color: black !important;
+                    text-decoration: none;
+                    &:hover {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
+
+footer {
+    border-bottom: 1px solid $secondary;
+    p {
+        margin: 0 !important;
+        background-color: #212529;
+    }
+    p a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.cart {
+    background-color: $secondary;
+    padding: .5rem;
+    border-radius: 20%;
+    width: 75%; 
+    height: auto
+}
+
+.card {
+    padding: 0 !important;
+    width: 20rem;
+    height: 100%;
+    min-height: 28rem;
+    border: 3px solid $secondary !important;
+
+    .card-img-top {
+        border-bottom: 3px solid $secondary;
+    }
+
+    .card-body {
+        text-align: center;
+        .card-title {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    
+        .card-text {
+            font-weight: bold;
+        }
+    }
+}
+
+form {
+    label {
+        padding: .5rem !important;
+        font-weight: bold !important;
+    }
+    input {
+        padding: .5rem !important;
+    }
+    button {
+        margin-top: 1rem !important;
+    }
+    p {
+        text-align: center;
+        a {
+            text-decoration: none;
+            color: $success;
+            &:hover {
+                font-weight: bold;
+            }
+        }
+    }
+    .form-check-input:checked {
+        background-color: $success;
+        border-color: $success;
+    }
+}
+
+.marketing a:not(.btn-success):not(.see-more) {
+    text-decoration: none;
+    color: $success;
+    &:hover {
+        text-decoration: underline;
+        color: $success;
+    }
+}
+
+.btn-primary {
+    box-shadow: 1px 1px 1px grey;
+}

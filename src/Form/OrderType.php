@@ -27,7 +27,7 @@ class OrderType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider votre adresse',
                 'attr' => [
-                    'class' => 'btn btn-success mt-3'
+                    'class' => 'btn btn-success mt-3 mx-3'
                 ]
             ])
         ;

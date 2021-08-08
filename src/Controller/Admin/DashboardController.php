@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Attraction;
 use App\Entity\Day;
 use App\Entity\Receipt;
 use App\Entity\Ticket;
@@ -34,8 +35,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class);
+        yield MenuItem::linkToCrud('Attractions', 'fas fa-tram', Attraction::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Reçus', 'fas fa-receipt', Receipt::class);
         yield MenuItem::linkToCrud('Jours', 'fas fa-sun', Day::class);
     }

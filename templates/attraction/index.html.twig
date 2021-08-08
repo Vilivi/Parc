@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les attractions - Hoa Mai Parc{% endblock %}
+
+{% block content %}
+    <h1 class="content-title m-4">Les attractions</h1>
+    <div class="row mt-3">
+        {% for attraction in attractions %}
+        <div class="card attraction-card col-md-3 mx-auto my-3">
+            <img src="/uploads/{{ attraction.illustration }}" alt="{{ attraction.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ attraction.name }}</h5>
+                <p class="card-text">{{ attraction.subtitle }}</p>
+                <a href="{{ path('attraction_show', {'slug' :  attraction.slug }) }}" class="btn btn-primary see-more">Voir plus de détails</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

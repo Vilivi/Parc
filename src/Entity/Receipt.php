@@ -55,6 +55,16 @@ class Receipt
      */
     private $state;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripeSessionId;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $sumTotals = 0;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -189,6 +199,30 @@ class Receipt
     public function setState(int $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(?string $stripeSessionId): self
+    {
+        $this->stripeSessionId = $stripeSessionId;
+
+        return $this;
+    }
+
+    public function getSumTotals(): ?float
+    {
+        return $this->sumTotals;
+    }
+
+    public function setSumTotals(float $sumTotals): self
+    {
+        $this->sumTotals = $sumTotals;
 
         return $this;
     }

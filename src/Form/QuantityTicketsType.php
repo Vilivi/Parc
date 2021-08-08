@@ -14,7 +14,7 @@ class QuantityTicketsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ticket_1', IntegerType::class, [
+            ->add('1', IntegerType::class, [
                 'label' => '- de 10ans',
                 'data' => 0,
                 'required' => false,
@@ -25,7 +25,7 @@ class QuantityTicketsType extends AbstractType
                     'class' => 'col-4'
                 ]
             ])
-            ->add('ticket_2', IntegerType::class, [
+            ->add('2', IntegerType::class, [
                 'label' => '+ de 10ans',
                 'data' => 0,
                 'required' => false,
@@ -36,7 +36,7 @@ class QuantityTicketsType extends AbstractType
                     'class' => 'col-4'
                 ]
             ])
-            ->add('ticket_3', IntegerType::class, [
+            ->add('3', IntegerType::class, [
                 'label' => 'Adulte',
                 'data' => 0,
                 'required' => false,

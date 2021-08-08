@@ -1,0 +1,10 @@
+<div>
+    <h3>Référence : {{ reference }}</h3>
+    <br>
+    <h3>Les places</h3>
+    <br>
+    <p>Ce billet comprend :</p>
+    {% for i in 0..(productsAndQuantity|length) %}
+    <p><strong>Places pour {{ productsAndQuantity[0][i] }}</strong>: {{ productsAndQuantity[1][i] }}</p>
+    {% endfor %}
+</div>

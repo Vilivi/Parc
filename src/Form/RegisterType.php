@@ -59,6 +59,9 @@ class RegisterType extends AbstractType
             ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
             'label' => 'Votre mot de passe',
+            'constraints' => new Length([
+                'min' => 8, 'max' => 15
+                ]),
             'required' => true,
             'invalid_message' => 'Le mot de passe de confirmation doit être identique au mot de passe.',
             'first_options' => ['label' => 'Votre mot de passe',
@@ -67,7 +70,10 @@ class RegisterType extends AbstractType
             'attr'=> ['placeholder' => 'Merci de saisir votre mot de passe']]
             ])
             ->add('submit', SubmitType::class,
-            ['label' => 'S\'inscrire'
+            ['label' => 'S\'inscrire',
+            'attr' => [
+                'class' => 'btn btn-success'
+            ]
             ])
         ;
     }

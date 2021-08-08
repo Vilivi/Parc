@@ -96,26 +96,28 @@ class OrderController extends AbstractController
             }
 
             $this->em->persist($receipt); 
-
+            $sumTotals = 0;
             foreach($cart->getFullTickets() as $ticket) {
                 $orderDetailTicket = new OrderDetail();
                 $orderDetailTicket->setProduct($ticket['ticket']->getTicketName());
-                $orderDetailTicket->setQuantity($ticket['quantity']);
+                $orderDetailTicket->setQuantity($ticket['quantity']* $cart->getTripDuration());
                 $orderDetailTicket->setPrice($ticket['ticket']->getTicketPrice());
-                $orderDetailTicket->setTotal($ticket['ticket']->getTicketPrice() * $ticket['quantity']);
+                $orderDetailTicket->setTotal($ticket['ticket']->getTicketPrice() * $ticket['quantity']* $cart->getTripDuration());
                 $orderDetailTicket->setReceipt($receipt);
                 $this->em->persist($orderDetailTicket);
+                $sumTotals = $sumTotals + $ticket['ticket']->getTicketPrice() * $ticket['quantity'];
             }
-            // $this->em->flush();
+            $receipt->setSumTotals($sumTotals);
+            $this->em->flush();
 
             return $this->render('order/add.html.twig', [
                 'duration' => $duration,
                 'tickets' => $cart->getFullTickets(),
                 'billingAddress' => $receipt->getBillingAddress(),
-                'reference' => $receipt->getReference()
+                'reference' => $receipt->getReference(),
             ]);
         }
 
         return $this->redirectToRoute('cart');        
     }
-}
+} 

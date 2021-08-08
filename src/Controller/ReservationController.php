@@ -28,7 +28,7 @@ class ReservationController extends AbstractController
             $end_date = $form->get('end_date')->getData();
             $now = new \DateTime("now");
 
-            // si la date de début est supérieur ou égale à aujourd'hui et que la date de fin est supérieur ou égale à celle du début
+            // si la date de début est >= à aujourd'hui et que la date de fin est >= à celle du début
             // alors les dates sont valides
             if($start_date >= $now  && $end_date >= $start_date){
                 if($cart->getTicketsQuantity()) {

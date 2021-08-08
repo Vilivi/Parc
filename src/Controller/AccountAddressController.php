@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Address;
-use App\Entity\User;
 use App\Form\AddressType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,12 +73,15 @@ class AccountAddressController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $address = $form->getData();
             $this->em->flush();
-            $this->addFlash('notice', 'Votre adresse a bien été ajoutée.');
+            $this->addFlash('notice', 'Votre adresse a bien été modifiée.');
             return $this->redirectToRoute('account_address');
         }
 
+        $update = true;
+
         return $this->render('account/address_form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'update' => $update
         ]);
     }
 

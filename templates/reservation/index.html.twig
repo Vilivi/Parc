@@ -4,9 +4,9 @@
 
 {% block content %}
     {% if sejour %}
-    <h1>Modifier le séjour</h1>
+    <h1 class="content-title">Modifier le séjour</h1>
     {% else %}
-    <h1>Réserver un séjour</h1>
+    <h1 class="content-title">Réserver un séjour</h1>
     {% endif %}
 
     {% for message in app.flashes('warning') %}
